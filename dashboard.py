@@ -7,6 +7,13 @@ from plotly.subplots import make_subplots
 from datetime import datetime, timedelta
 import os
 
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+
+# Auto-generate data if CSV files don't exist (needed for Streamlit Cloud)
+if not os.path.exists(os.path.join(DATA_DIR, "orders.csv")):
+    from data.generator import generate_all
+    generate_all(DATA_DIR)
+
 from analytics.inventory import (
     load_data, inventory_turnover, stockout_analysis,
     slow_moving_analysis, category_performance
@@ -22,8 +29,6 @@ from analytics.correlation import (
 )
 
 st.set_page_config(page_title="Supply Chain Analytics Dashboard", layout="wide")
-
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 @st.cache_data
 def load_all_data():
