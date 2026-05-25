@@ -48,7 +48,7 @@ def slow_moving_analysis(inventory, products):
 
 
 def category_performance(inventory, products):
-    merged = inventory.merge(products[["product_id", "category", "price"]], on="product_id")
+    merged = inventory.merge(products[["product_id", "price"]], on="product_id")
     monthly = merged.copy()
     monthly["month"] = monthly["date"].dt.to_period("M")
     cat_perf = monthly.groupby(["category", "month"]).agg(

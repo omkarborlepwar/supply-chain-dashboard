@@ -53,8 +53,7 @@ def channel_roi(marketing, orders):
 
 
 def category_correlation(inventory, orders, products):
-    merged = orders.merge(products[["product_id", "category"]], on="product_id")
-    cat_sales = merged.groupby(["order_date", "category"])["total"].sum().reset_index()
+    cat_sales = orders.groupby(["order_date", "category"])["total"].sum().reset_index()
     pivot = cat_sales.pivot_table(index="order_date", columns="category", values="total", fill_value=0)
 
     if len(pivot.columns) > 1:
