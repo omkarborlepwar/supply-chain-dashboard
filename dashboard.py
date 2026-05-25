@@ -124,7 +124,6 @@ with tab_inventory:
 
     st.subheader("Inventory Turnover by Category")
     turn_cat = turnover.groupby(["category", "month"])["turnover_ratio"].mean().reset_index()
-    turn_cat["month"] = turn_cat["month"].astype(str)
     fig = px.line(turn_cat, x="month", y="turnover_ratio", color="category",
                   title="Monthly Inventory Turnover by Category",
                   labels={"turnover_ratio": "Turnover Ratio", "month": ""})
@@ -142,7 +141,6 @@ with tab_inventory:
 
     st.subheader("Category Performance Over Time")
     cat_perf = category_performance(inventory, products)
-    cat_perf["month"] = cat_perf["month"].astype(str)
     fig = px.line(cat_perf, x="month", y="revenue", color="category",
                   title="Monthly Revenue by Category",
                   labels={"revenue": "Revenue (₹)", "month": ""})

@@ -27,7 +27,7 @@ def fulfillment_kpis(orders, deliveries):
         region_stats["on_time_delivery"] / region_stats["total_orders"] * 100
     ).round(1)
 
-    merged["month"] = merged["order_date"].dt.to_period("M")
+    merged["month"] = merged["order_date"].dt.to_period("M").astype(str)
     monthly = merged.groupby("month").agg(
         total_orders=("order_id", "count"),
         avg_delivery_days=("delivery_time_days", "mean"),

@@ -13,7 +13,7 @@ def load_data(data_dir="data"):
 
 def inventory_turnover(inventory, products):
     monthly = inventory.copy()
-    monthly["month"] = monthly["date"].dt.to_period("M")
+    monthly["month"] = monthly["date"].dt.to_period("M").astype(str)
     monthly = monthly.groupby(["product_id", "product_name", "month"]).agg(
         avg_stock=("stock_on_hand", "mean"),
         total_sold=("daily_sold", "sum"),
@@ -50,7 +50,7 @@ def slow_moving_analysis(inventory, products):
 def category_performance(inventory, products):
     merged = inventory.merge(products[["product_id", "price"]], on="product_id")
     monthly = merged.copy()
-    monthly["month"] = monthly["date"].dt.to_period("M")
+    monthly["month"] = monthly["date"].dt.to_period("M").astype(str)
     cat_perf = monthly.groupby(["category", "month"]).agg(
         total_sold=("daily_sold", "sum"),
         avg_stock=("stock_on_hand", "mean"),
